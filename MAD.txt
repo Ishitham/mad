@@ -1,0 +1,202 @@
+WEEK-1:
+
+package com.example.week1;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+    EditText editText;
+    Button button;
+    TextView textView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+       editText=findViewById(R.id.edittext);
+       textView=findViewById(R.id.textView);
+       button=findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name=editText.getText().toString();
+                textView.setText("Hello "+name);
+            }
+        });
+    }
+}
+
+
+LISTVIEW:
+
+package com.example.listview;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ListView listView=findViewById(R.id.listview);
+        List<String> list=new ArrayList<>();
+        list.add("Ishitha");
+        list.add("Raveena");
+        list.add("Likitha");
+        list.add("Thanusha");
+
+        ArrayAdapter arrayAdapter=new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1,list);
+        listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position==0){
+                    //clicked Ishitha
+                    startActivity(new Intent(MainActivity.this,IshithaActivity.class));
+                }
+                else if(position==1){
+                    //clicked Raveena
+                    startActivity(new Intent(MainActivity.this,RaveenaActivity.class));
+                }
+                else{
+                    //clicked anything
+                    startActivity(new Intent(MainActivity.this,LikithaActivity.class));
+
+                }
+
+
+            }
+        });
+
+    }
+}
+
+MENU:
+
+package com.example.menu;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu_item,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id= item.getItemId();
+
+        if(id==R.id.dail){
+//            Toast.makeText(this, "Dail Number Clicked!", Toast.LENGTH_SHORT).show();
+
+            Intent intent=new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:123456789"));
+            startActivity(intent);
+        }
+        if(id==R.id.sms){
+//            Toast.makeText(this, "SMS Clicked!", Toast.LENGTH_SHORT).show();
+            
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("sms:123456789"));
+            startActivity(intent);
+        }
+        if(id==R.id.website){
+//            Toast.makeText(this, "Clicked Website!", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://www.google.com/"));
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
+
+NOTIFICATION:
+
+package com.example.notification;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+    //Initilization
+    Button bt;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //Assign variables
+        bt=findViewById(R.id.bt);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            NotificationChannel channel=new NotificationChannel("My Notification","My Notification",NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager=getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            //notification code
+                NotificationCompat.Builder builder=new NotificationCompat.Builder(MainActivity.this,"My Notification");
+                builder.setContentTitle("My title");
+                builder.setContentText("Hello I am Ishitha here!!");
+                builder.setSmallIcon(R.drawable.ic_launcher_background);
+                builder.setAutoCancel(true);
+
+                NotificationManagerCompat managerCompat=NotificationManagerCompat.from(MainActivity.this);
+                managerCompat.notify(1, builder.build());
+            }
+        });
+    }
+}
