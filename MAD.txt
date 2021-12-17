@@ -36,6 +36,31 @@ public class MainActivity extends AppCompatActivity {
 
 LISTVIEW:
 
+Manifest File: android:parentActivityName=".MainActivity"
+
+XML:-
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/txt3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IshithaActivity">
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="148dp"
+        android:layout_height="55dp"
+        android:layout_centerInParent="true"
+        android:text="@string/ishitha"
+        android:textSize="34sp" />
+
+
+</RelativeLayout>
+
+JAVACODE:-
+
 package com.example.listview;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -92,6 +117,29 @@ public class MainActivity extends AppCompatActivity {
 }
 
 MENU:
+
+MENU Folder:- create main.xml
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.menuweek4.MainActivity">
+    <item
+        android:id="@+id/dail_no"
+        android:orderInCategory="100"
+        android:title="Dail Number"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sms"
+        android:orderInCategory="100"
+        android:title="SMS"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/website"
+        android:orderInCategory="100"
+        android:title="Website"
+        app:showAsAction="never" />
+</menu>
 
 package com.example.menu;
 
